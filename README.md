@@ -7,7 +7,7 @@ This project aims to create videos like [this one](https://www.youtube.com/short
 1. Clone Repository
 
 ```
-git clone
+git clone https://github.com/araujorafael9201/tiktokmaker.git
 ```
 
 2. Install Dependencies
@@ -26,7 +26,7 @@ pip install -r requirements.txt
 ```
 
 4. Put The Desired Background Videos on ˋvideos/basesˋ
-5. Follow the [Reddit API Docs](https://github.com/reddit-archive/reddit/wiki/API) to create your credentials and put them on ´credentials.json´, folowing [the example file](./credentials.json.example)
+5. Follow the [Reddit API Docs](https://github.com/reddit-archive/reddit/wiki/API) to create your credentials and put them on ˋcredentials.jsonˋ, folowing the [example file](./credentials.json.example)
 6. Run
 
 ```
