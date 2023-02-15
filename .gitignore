@@ -1,6 +1,10 @@
 .vscode/
 __pycache__/
 env/
+videos/*
 screenshots/*
 credentials.json
 geckodriver.log
+youtube.py
+token-oauth2.json
+used.txt
