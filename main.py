@@ -10,6 +10,7 @@ from video import make_video
 N_OF_COMMENTS = 4
 
 url = get_posts()
+url = url.replace('www', 'old')
 
 texts_to_read = []
 
@@ -21,36 +22,31 @@ post_id = url.split("/")[6]
 driver.get(f"{url}?limit={N_OF_COMMENTS}&depth=1")
 
 # Get Post Text and Screenshot
-post = driver.find_element(By.XPATH, "//div[@data-test-id='post-content']")
-title = driver.find_element(By.TAG_NAME, "h1").text
+divs = driver.find_elements(By.CLASS_NAME, "entry")
+title = driver.find_elements(By.CLASS_NAME, "title")[2].text
 texts_to_read.append(title)
+
+post = driver.find_element(By.CLASS_NAME, "top-matter")
 post.screenshot(f"screenshots/screenshot-0.png")
 
 # Get Comments Divs to Screenshot
-comments_divs = driver.find_elements(By.CLASS_NAME, "Comment")
-
-
-# Get Comments Texts
-comments_content = driver.find_elements(
-    By.XPATH,
-    "//div[contains(concat(' ', normalize-space(@class), ' '), ' RichTextJSON-root ')]",
-)
+comments_divs = divs[1:]
 
 # A single comment can have more than one <p> tag, so this is needed
-for com in comments_content:
-    com_full_text = []
+for com in comments_divs:
     paragraphs = com.find_elements(By.TAG_NAME, "p")
-    for p in paragraphs:
-        com_full_text.append(p.text)
+    for i, p in enumerate(paragraphs):
+        if i % 2 == 0 or p.text == "":
+            continue
+        texts_to_read.append(p.text)
 
-    # Some threads have empty <p> tags
-    if com.text != "":
-        texts_to_read.append(" ".join(com_full_text))
+print(texts_to_read)
 
 # Get Comments Screenshot
-for e in comments_divs:
+for i, e in enumerate(comments_divs[:-1]):
+    if i % 2 != 0:
+        continue
     e.screenshot(f"screenshots/screenshot-{comments_divs.index(e) + 1}.png")
-
 
 make_audio_files(texts_to_read)
 make_video(title)

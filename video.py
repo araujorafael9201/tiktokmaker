@@ -12,7 +12,7 @@ from random import choice
 base_videos = os.listdir('videos/bases/')
 
 # This should change according to your background video resolution
-RESIZE_FACTOR = 1.9
+RESIZE_FACTOR = 0.7
 
 def make_video(filename):
     times = []
@@ -65,4 +65,4 @@ def make_video(filename):
 
     final = CompositeVideoClip([videoclip, imageclip])
     final.set_duration(final_audioclip.duration)
-    final.write_videofile(f"videos/{filename}.mp4")
+    final.write_videofile(f"videos/{filename}.mp4", threads=3)
